@@ -14,7 +14,7 @@ public class Persona {
     }
 
     public Persona(long cedula, String primerN, String segundoN, String primerA,
-                   String segundoA, String carrera, String calle, String numero) {
+            String segundoA, String carrera, String calle, String numero) {
         this.cedula = cedula;
         this.primerN = primerN;
         this.segundoN = segundoN;
@@ -26,28 +26,67 @@ public class Persona {
     }
 
     // Getters y setters
-    public long getCedula() { return cedula; }
-    public void setCedula(long cedula) { this.cedula = cedula; }
+    public long getCedula() {
+        return cedula;
+    }
 
-    public String getPrimerN() { return primerN; }
-    public void setPrimerN(String primerN) { this.primerN = primerN; }
+    public void setCedula(long cedula) {
+        this.cedula = cedula;
+    }
 
-    public String getSegundoN() { return segundoN; }
-    public void setSegundoN(String segundoN) { this.segundoN = segundoN; }
+    public String getPrimerN() {
+        return primerN;
+    }
 
-    public String getPrimerA() { return primerA; }
-    public void setPrimerA(String primerA) { this.primerA = primerA; }
+    public void setPrimerN(String primerN) {
+        this.primerN = primerN;
+    }
 
-    public String getSegundoA() { return segundoA; }
-    public void setSegundoA(String segundoA) { this.segundoA = segundoA; }
+    public String getSegundoN() {
+        return segundoN;
+    }
 
-    public String getCarrera() { return carrera; }
-    public void setCarrera(String carrera) { this.carrera = carrera; }
+    public void setSegundoN(String segundoN) {
+        this.segundoN = segundoN;
+    }
 
-    public String getCalle() { return calle; }
-    public void setCalle(String calle) { this.calle = calle; }
+    public String getPrimerA() {
+        return primerA;
+    }
 
-    public String getNumero() { return numero; }
-    public void setNumero(String numero) { this.numero = numero; }
+    public void setPrimerA(String primerA) {
+        this.primerA = primerA;
+    }
+
+    public String getSegundoA() {
+        return segundoA;
+    }
+
+    public void setSegundoA(String segundoA) {
+        this.segundoA = segundoA;
+    }
+
+    public String getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(String carrera) {
+        this.carrera = carrera;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
 }
-

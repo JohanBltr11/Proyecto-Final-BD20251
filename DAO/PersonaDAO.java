@@ -13,7 +13,7 @@ public class PersonaDAO {
         String sql = "INSERT INTO Persona (cedula, primerN, segundoN, primerA, segundoA, Carrera, Calle, Numero) "
                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection cn = (Connection) ConexionBD.getConexion();
+        try (Connection cn =  (Connection)ConexionBD.getConexion();
              PreparedStatement stmt = cn.prepareStatement(sql)) {
 
             stmt.setLong(1, persona.getCedula());
