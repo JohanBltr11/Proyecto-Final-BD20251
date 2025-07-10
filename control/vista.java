@@ -40,12 +40,16 @@ public class vista extends JFrame {
 
             // Aquí podrías validar usuario y clave (por ahora solo mostramos)
             if (usuario.equals("admin") && clave.equals("1234")) {
-                JOptionPane.showMessageDialog(this, "Acceso concedido", "Bienvenido Gerente", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Acceso concedido", "Bienvenido Gerente",
+                        JOptionPane.INFORMATION_MESSAGE);
                 mostrarMenuPrincipalGerente(); // Aquí va el menú después del login
-            } else if(usuario.equals("recepcion") && clave.equals("0809")){
-                JOptionPane.showMessageDialog(this, "Acceso concedido", "Bienvenido a la Recepción", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+            } else if (usuario.equals("recepcion") && clave.equals("0809")) {
+                JOptionPane.showMessageDialog(this, "Acceso concedido", "Bienvenido a la Recepción",
+                        JOptionPane.INFORMATION_MESSAGE);
                 mostrarMenuPrincipalRecepcion();
-            } else{
+                this.dispose();
+            } else {
                 JOptionPane.showMessageDialog(this, "Credenciales incorrectas", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -78,7 +82,6 @@ public class vista extends JFrame {
             // Aquí podrías abrir una nueva ventana o panel para el CRUD de servicios
             JOptionPane.showMessageDialog(menu, "Abrir CRUD Servicios", "Información", JOptionPane.INFORMATION_MESSAGE);
         });
-        
 
         menu.add(panel);
         menu.setVisible(true);
@@ -112,11 +115,10 @@ public class vista extends JFrame {
             JOptionPane.showMessageDialog(menu, "Mostrar Consultas", "Información", JOptionPane.INFORMATION_MESSAGE);
         });
 
-    
-
         menu.add(panel);
         menu.setVisible(true);
     }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             new vista().setVisible(true);
