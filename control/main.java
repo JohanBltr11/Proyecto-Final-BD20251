@@ -16,8 +16,5 @@ public class main {
             System.out.println("❌ Error: No se pudo establecer la conexión.");
         }
 
-        ClienteDAO client= new ClienteDAO();
-        System.out.println(client.obtenerClientePorCedula(1078912345).getCorreoElectronico());
-
     }
 }

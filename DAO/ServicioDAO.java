@@ -13,8 +13,7 @@ public class ServicioDAO {
     public void insertar(Servicio servicio) {
         String sql = "INSERT INTO Servicio (IdServicio, Costo, nombreDescriptivoServicio, DetalleServicio) VALUES (?, ?, ?, ?)";
 
-        try (Connection cn = (Connection) ConexionBD.getConexion();
-             PreparedStatement stmt = cn.prepareStatement(sql)) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();             PreparedStatement stmt = cn.prepareStatement(sql)) {
 
             stmt.setInt(1, servicio.getIdServicio());
             stmt.setInt(2, servicio.getCosto());
@@ -31,8 +30,8 @@ public class ServicioDAO {
     public void actualizar(Servicio servicio) {
         String sql = "UPDATE Servicio SET Costo = ?, nombreDescriptivoServicio = ?, DetalleServicio = ? WHERE IdServicio = ?";
 
-        try (Connection cn = (Connection) ConexionBD.getConexion();
-             PreparedStatement stmt = cn.prepareStatement(sql)) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();             
+            PreparedStatement stmt = cn.prepareStatement(sql)) {
 
             stmt.setInt(1, servicio.getCosto());
             stmt.setString(2, servicio.getNombreDescriptivoServicio());
@@ -49,8 +48,7 @@ public class ServicioDAO {
     public void eliminar(int idServicio) {
         String sql = "DELETE FROM Servicio WHERE IdServicio = ?";
 
-        try (Connection cn = (Connection) ConexionBD.getConexion();
-             PreparedStatement stmt = cn.prepareStatement(sql)) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();             PreparedStatement stmt = cn.prepareStatement(sql)) {
 
             stmt.setInt(1, idServicio);
             stmt.executeUpdate();
@@ -65,8 +63,7 @@ public class ServicioDAO {
         List<Servicio> servicios = new ArrayList<>();
         String sql = "SELECT * FROM Servicio";
 
-        try (Connection cn = (Connection) ConexionBD.getConexion();
-             Statement stmt = cn.createStatement();
+        try (Connection cn = ConexionBD.getConexion().getConnection();             Statement stmt = cn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
@@ -90,8 +87,7 @@ public class ServicioDAO {
     public Servicio buscarPorId(int idServicio) {
         String sql = "SELECT * FROM Servicio WHERE IdServicio = ?";
 
-        try (Connection cn = (Connection) ConexionBD.getConexion();
-             PreparedStatement stmt = cn.prepareStatement(sql)) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();             PreparedStatement stmt = cn.prepareStatement(sql)) {
 
             stmt.setInt(1, idServicio);
             try (ResultSet rs = stmt.executeQuery()) {

@@ -6,29 +6,17 @@ import java.sql.SQLException;
 
 public class ConexionBD {
     private static ConexionBD instancia = null;
-    private Connection conn = null;
 
-    /*private final String url = "jdbc:sqlserver://finalproyectobd.database.windows.net:1433;database=Hotel_database";
-    private final String user = "cacelish"; 
-    private final String password = "LuffyGear5";*/
+    private final String urlll = "jdbc:sqlserver://finalproyectobd.database.windows.net:1433;" +
+        "database=Hotel_database;" +
+        "user=cacelish@finalproyectobd;" +
+        "password=LuffyGear5;" +
+        "encrypt=true;" +
+        "trustServerCertificate=false;" +
+        "hostNameInCertificate=*.database.windows.net;" +
+        "loginTimeout=30;";
 
-	String urlll="jdbc:sqlserver://finalproyectobd.database.windows.net:1433;"+
-	"database=Hotel_database;"+
-	"user=cacelish@finalproyectobd;"+
-	"password=LuffyGear5;"+
-	"encrypt=true;"+
-	"trustServerCertificate=false;"+
-	"hostNameInCertificate=*.database.windows.net;"+
-	"loginTimeout=30;";
-
-    private ConexionBD() {
-        try {
-            conn = DriverManager.getConnection(urlll);
-            System.out.println("Conexión exitosa a Azure SQL");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    private ConexionBD() {}
 
     public static ConexionBD getConexion() {
         if (instancia == null) {
@@ -38,6 +26,12 @@ public class ConexionBD {
     }
 
     public Connection getConnection() {
-        return conn;
+        try {
+            return DriverManager.getConnection(urlll);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
+

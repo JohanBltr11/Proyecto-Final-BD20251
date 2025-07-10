@@ -15,8 +15,7 @@ public class ReservaDAO {
         String sql = "INSERT INTO Reserva (tiempoMaxCancelacion, FechaHoraLlegada, FechaHoraSalida, ValorReserva, idHabitacion, Cedula) " +
                      "VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection cn = (Connection) ConexionBD.getConexion();
-             PreparedStatement stmt = cn.prepareStatement(sql)) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();             PreparedStatement stmt = cn.prepareStatement(sql)) {
 
             stmt.setInt(1, reserva.getTiempoMaxCancelacion());
             stmt.setTimestamp(2, Timestamp.valueOf(reserva.getFechaHoraLlegada()));
@@ -35,8 +34,7 @@ public class ReservaDAO {
     public void eliminar(int idHabitacion, long cedula, LocalDateTime fechaHoraLlegada) {
         String sql = "DELETE FROM Reserva WHERE idHabitacion = ? AND Cedula = ? AND FechaHoraLlegada = ?";
 
-        try (Connection cn = (Connection)ConexionBD.getConexion();
-             PreparedStatement stmt = cn.prepareStatement(sql)) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();             PreparedStatement stmt = cn.prepareStatement(sql)) {
 
             stmt.setInt(1, idHabitacion);
             stmt.setLong(2, cedula);
@@ -47,14 +45,25 @@ public class ReservaDAO {
             System.err.println("❌ Error al eliminar reserva: " + e.getMessage());
         }
     }
+    public void eliminarReservasPorCedula(long cedula) {
+    String sql = "DELETE FROM Reserva WHERE Cedula = ?";
 
+    try (Connection cn = ConexionBD.getConexion().getConnection();
+         PreparedStatement stmt = cn.prepareStatement(sql)) {
+
+        stmt.setLong(1, cedula);
+        stmt.executeUpdate();
+
+    } catch (SQLException e) {
+        System.err.println("❌ Error al eliminar reservas por cédula: " + e.getMessage());
+    }
+}
     // LISTAR TODOS
     public List<Reserva> listarTodos() {
         List<Reserva> reservas = new ArrayList<>();
         String sql = "SELECT * FROM Reserva";
 
-        try (Connection cn = (Connection)ConexionBD.getConexion();
-             Statement stmt = cn.createStatement();
+        try (Connection cn = ConexionBD.getConexion().getConnection();             Statement stmt = cn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
@@ -79,8 +88,7 @@ public class ReservaDAO {
     public Reserva buscar(int idHabitacion, long cedula, LocalDateTime fechaHoraLlegada) {
         String sql = "SELECT * FROM Reserva WHERE idHabitacion = ? AND Cedula = ? AND FechaHoraLlegada = ?";
 
-        try (Connection cn = (Connection) ConexionBD.getConexion();
-             PreparedStatement stmt = cn.prepareStatement(sql)) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();             PreparedStatement stmt = cn.prepareStatement(sql)) {
 
             stmt.setInt(1, idHabitacion);
             stmt.setLong(2, cedula);

@@ -12,8 +12,7 @@ public class AreaDAO {
     public void insertar(Area area) {
         String sql = "INSERT INTO Area (IdArea, descripcionArea, nombreArea) VALUES (?, ?, ?)";
 
-        try (Connection cn = (Connection) ConexionBD.getConexion();
-             PreparedStatement stmt = cn.prepareStatement(sql)) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();             PreparedStatement stmt = cn.prepareStatement(sql)) {
 
             stmt.setInt(1, area.getIdArea());
             stmt.setString(2, area.getDescripcionArea());
@@ -29,8 +28,7 @@ public class AreaDAO {
     public void actualizar(Area area) {
         String sql = "UPDATE Area SET descripcionArea = ?, nombreArea = ? WHERE IdArea = ?";
 
-        try (Connection cn = (Connection) ConexionBD.getConexion();
-             PreparedStatement stmt = cn.prepareStatement(sql)) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();             PreparedStatement stmt = cn.prepareStatement(sql)) {
 
             stmt.setString(1, area.getDescripcionArea());
             stmt.setString(2, area.getNombreArea());
@@ -46,8 +44,7 @@ public class AreaDAO {
     public void eliminar(int idArea) {
         String sql = "DELETE FROM Area WHERE IdArea = ?";
 
-        try (Connection cn = (Connection) ConexionBD.getConexion();
-             PreparedStatement stmt = cn.prepareStatement(sql)) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();             PreparedStatement stmt = cn.prepareStatement(sql)) {
 
             stmt.setInt(1, idArea);
             stmt.executeUpdate();
@@ -62,8 +59,7 @@ public class AreaDAO {
         List<Area> areas = new ArrayList<>();
         String sql = "SELECT * FROM Area";
 
-        try (Connection cn = (Connection) ConexionBD.getConexion();
-             Statement stmt = cn.createStatement();
+        try (Connection cn = ConexionBD.getConexion().getConnection();             Statement stmt = cn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
@@ -85,8 +81,7 @@ public class AreaDAO {
     public Area buscarPorId(int idArea) {
         String sql = "SELECT * FROM Area WHERE IdArea = ?";
 
-        try (Connection cn = (Connection) ConexionBD.getConexion();
-             PreparedStatement stmt = cn.prepareStatement(sql)) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();             PreparedStatement stmt = cn.prepareStatement(sql)) {
 
             stmt.setInt(1, idArea);
             try (ResultSet rs = stmt.executeQuery()) {

@@ -5,6 +5,7 @@ public class Empleado {
     private String cargo;
     private int IdArea;
     private Area area;
+    private Persona persona;
 
     public Empleado() {
     }
@@ -41,6 +42,14 @@ public class Empleado {
 
     public int getIdArea() {
         return area != null ? area.getIdArea() : 0;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 
     @Override

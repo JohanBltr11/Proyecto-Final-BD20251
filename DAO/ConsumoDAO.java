@@ -14,8 +14,8 @@ public class ConsumoDAO {
     public void insertar(Consumo consumo) {
         String sql = "INSERT INTO Consumo (FechaHora, IdServicio, cedula) VALUES (?, ?, ?)";
 
-        try (Connection cn = (Connection)ConexionBD.getConexion();
-             PreparedStatement stmt = cn.prepareStatement(sql)) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();
+                PreparedStatement stmt = cn.prepareStatement(sql)) {
 
             stmt.setTimestamp(1, Timestamp.valueOf(consumo.getFechaHora()));
             stmt.setInt(2, consumo.getIdServicio());
@@ -31,8 +31,8 @@ public class ConsumoDAO {
     public void eliminar(int idServicio, long cedula) {
         String sql = "DELETE FROM Consumo WHERE IdServicio = ? AND cedula = ?";
 
-        try (Connection cn = (Connection)ConexionBD.getConexion();
-             PreparedStatement stmt = cn.prepareStatement(sql)) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();
+                PreparedStatement stmt = cn.prepareStatement(sql)) {
 
             stmt.setInt(1, idServicio);
             stmt.setLong(2, cedula);
@@ -48,9 +48,9 @@ public class ConsumoDAO {
         List<Consumo> consumos = new ArrayList<>();
         String sql = "SELECT * FROM Consumo";
 
-        try (Connection cn = (Connection)ConexionBD.getConexion();
-             Statement stmt = cn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();
+                Statement stmt = cn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 Consumo c = new Consumo();
@@ -72,8 +72,8 @@ public class ConsumoDAO {
     public Consumo buscarPorClave(int idServicio, long cedula) {
         String sql = "SELECT * FROM Consumo WHERE IdServicio = ? AND cedula = ?";
 
-        try (Connection cn = (Connection)ConexionBD.getConexion();
-             PreparedStatement stmt = cn.prepareStatement(sql)) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();
+                PreparedStatement stmt = cn.prepareStatement(sql)) {
 
             stmt.setInt(1, idServicio);
             stmt.setLong(2, cedula);

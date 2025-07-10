@@ -34,9 +34,8 @@ public class ClienteDAO {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return new Cliente(
-                    rs.getLong("cedula"),
-                    rs.getString("correoElectronico")
-                );
+                        rs.getLong("cedula"),
+                        rs.getString("correoElectronico"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -48,17 +47,61 @@ public class ClienteDAO {
         List<Cliente> lista = new ArrayList<>();
         String sql = "SELECT * FROM Cliente";
         try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+                ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 lista.add(new Cliente(
-                    rs.getLong("cedula"),
-                    rs.getString("correoElectronico")
-                ));
+                        rs.getLong("cedula"),
+                        rs.getString("correoElectronico")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return lista;
+    }
+
+    public void listarClientesConNombreYApellido() {
+        String sql = "SELECT c.cedula, c.correoElectronico, p.nombre, p.apellido " +
+                "FROM Cliente c JOIN Persona p ON c.cedula = p.cedula";
+
+        try (Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+
+            System.out.println("---- Lista de Clientes ----");
+            while (rs.next()) {
+                long cedula = rs.getLong("cedula");
+                String correo = rs.getString("correoElectronico");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+
+                System.out.println("Cédula: " + cedula +
+                        ", Nombre: " + nombre +
+                        ", Apellido: " + apellido +
+                        ", Correo: " + correo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Object[]> listarClientesParaTabla() {
+        List<Object[]> datos = new ArrayList<>();
+        String sql = "SELECT c.cedula, p.primerN, p.primerA, c.correoElectronico " +
+                "FROM Cliente c JOIN Persona p ON c.cedula = p.cedula";
+
+        try (Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Object[] fila = new Object[4];
+                fila[0] = rs.getLong("cedula");
+                fila[1] = rs.getString("primerN");
+                fila[2] = rs.getString("primerA");
+                fila[3] = rs.getString("correoElectronico");
+                datos.add(fila);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return datos;
     }
 
     public boolean actualizarCliente(Cliente cliente) {
@@ -83,4 +126,51 @@ public class ClienteDAO {
             return false;
         }
     }
+
+    public void eliminarClienteTotal(long cedula) {
+        try (Connection cn = ConexionBD.getConexion().getConnection()) {
+
+            // Borrar Incluye
+            try (PreparedStatement ps = cn.prepareStatement("DELETE FROM Incluye WHERE cedula = ?")) {
+                ps.setLong(1, cedula);
+                ps.executeUpdate();
+            }
+
+            // Borrar Reserva
+            try (PreparedStatement ps = cn.prepareStatement("DELETE FROM Reserva WHERE Cedula = ?")) {
+                ps.setLong(1, cedula);
+                ps.executeUpdate();
+            }
+
+            // Borrar Consumo
+            try (PreparedStatement ps = cn.prepareStatement("DELETE FROM Consumo WHERE cedula = ?")) {
+                ps.setLong(1, cedula);
+                ps.executeUpdate();
+            }
+
+            // Borrar Teléfono
+            try (PreparedStatement ps = cn.prepareStatement("DELETE FROM Telefono WHERE cedula = ?")) {
+                ps.setLong(1, cedula);
+                ps.executeUpdate();
+            }
+
+            // Borrar Cliente
+            try (PreparedStatement ps = cn.prepareStatement("DELETE FROM Cliente WHERE cedula = ?")) {
+                ps.setLong(1, cedula);
+                ps.executeUpdate();
+            }
+
+            // Borrar Persona (si no es empleado)
+            try (PreparedStatement ps = cn.prepareStatement("DELETE FROM Persona WHERE cedula = ?")) {
+                ps.setLong(1, cedula);
+                ps.executeUpdate();
+            }
+
+            System.out.println("✅ Cliente eliminado exitosamente.");
+
+        } catch (SQLException e) {
+            System.err.println("❌ Error al eliminar cliente: " + e.getMessage());
+        }
+    }
+
 }

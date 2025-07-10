@@ -12,8 +12,7 @@ public class IncluyeDAO {
     public void insertar(Incluye incluye) {
         String sql = "INSERT INTO Incluye (idHabitacion, cedula, FechaHoraLlegada, idServicio) VALUES (?, ?, ?, ?)";
 
-        try (Connection cn = (Connection) ConexionBD.getConexion();
-             PreparedStatement stmt = cn.prepareStatement(sql)) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();             PreparedStatement stmt = cn.prepareStatement(sql)) {
 
             stmt.setInt(1, incluye.getIdHabitacion());
             stmt.setLong(2, incluye.getCedula());
@@ -31,8 +30,7 @@ public class IncluyeDAO {
         List<Incluye> lista = new ArrayList<>();
         String sql = "SELECT * FROM Incluye";
 
-        try (Connection cn = (Connection) ConexionBD.getConexion();
-             Statement stmt = cn.createStatement();
+        try (Connection cn = ConexionBD.getConexion().getConnection();             Statement stmt = cn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
@@ -55,8 +53,7 @@ public class IncluyeDAO {
     public void eliminar(Incluye incluye) {
         String sql = "DELETE FROM Incluye WHERE idHabitacion = ? AND cedula = ? AND FechaHoraLlegada = ? AND idServicio = ?";
 
-        try (Connection cn = (Connection) ConexionBD.getConexion();
-             PreparedStatement stmt = cn.prepareStatement(sql)) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();             PreparedStatement stmt = cn.prepareStatement(sql)) {
 
             stmt.setInt(1, incluye.getIdHabitacion());
             stmt.setLong(2, incluye.getCedula());
