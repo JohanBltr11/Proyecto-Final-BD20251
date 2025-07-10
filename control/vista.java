@@ -75,12 +75,13 @@ public class vista extends JFrame {
 
         btnCRUDempleados.addActionListener(e -> {
             // Aquí podrías abrir una nueva ventana o panel para el CRUD de empleados
-            JOptionPane.showMessageDialog(menu, "Abrir CRUD Empleados", "Información", JOptionPane.INFORMATION_MESSAGE);
+            CRUDempleados();
+            this.dispose();
         });
 
         btnCRUDservicios.addActionListener(e -> {
             // Aquí podrías abrir una nueva ventana o panel para el CRUD de servicios
-            JOptionPane.showMessageDialog(menu, "Abrir CRUD Servicios", "Información", JOptionPane.INFORMATION_MESSAGE);
+            CRUDservicios();
         });
 
         menu.add(panel);
@@ -107,16 +108,91 @@ public class vista extends JFrame {
 
         btnCRUDclientes.addActionListener(e -> {
             // Aquí podrías abrir una nueva ventana o panel para el CRUD de empleados
-            JOptionPane.showMessageDialog(menu, "Abrir CRUD Clientes", "Información", JOptionPane.INFORMATION_MESSAGE);
+            CRUDclientes();
         });
 
         btnConsultas.addActionListener(e -> {
             // Aquí podrías abrir una nueva ventana o panel para el CRUD de servicios
-            JOptionPane.showMessageDialog(menu, "Mostrar Consultas", "Información", JOptionPane.INFORMATION_MESSAGE);
+            Consultas();
         });
 
         menu.add(panel);
         menu.setVisible(true);
+    }
+
+    private void CRUDempleados() {
+        JFrame menu = new JFrame("CRUD Empleados");
+        menu.setSize(400, 300);
+        menu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        menu.setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel(new GridLayout(4, 1, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        JButton btnAgregar = new JButton("Agregar Empleado");
+        JButton btnModificar = new JButton("Modificar Empleado");
+        JButton btnEliminar = new JButton("Eliminar Empleado");
+        JButton btnListar = new JButton("Listar Empleados");
+
+        panel.add(btnAgregar);
+        panel.add(btnModificar);
+        panel.add(btnEliminar);
+        panel.add(btnListar);
+
+        menu.add(panel);           // 🔧 Importante
+        menu.setVisible(true);     // 🔧 Muy importante
+    }
+
+    private void CRUDservicios() {
+        JFrame menu = new JFrame("CRUD Servicios");
+        menu.setSize(400, 300);
+        menu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        menu.setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel(new GridLayout(4, 1, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        JButton btnAgregar = new JButton("Agregar Servicio");
+        JButton btnModificar = new JButton("Modificar Servicio");
+        JButton btnEliminar = new JButton("Eliminar Servicio");
+        JButton btnListar = new JButton("Listar Servicios");
+
+        panel.add(btnAgregar);
+        panel.add(btnModificar);
+        panel.add(btnEliminar);
+        panel.add(btnListar);
+
+        menu.add(panel);           // Agrega el panel al frame
+        menu.setVisible(true);     // Muestra la ventana
+    }
+
+
+    private void CRUDclientes() {
+        JFrame menu = new JFrame("CRUD Clientes");
+        menu.setSize(400, 300);
+        menu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        menu.setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel(new GridLayout(4, 1, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        JButton btnAgregar = new JButton("Agregar Cliente");
+        JButton btnModificar = new JButton("Modificar Cliente");
+        JButton btnEliminar = new JButton("Eliminar Cliente");
+        JButton btnListar = new JButton("Listar Clientes");
+
+        panel.add(btnAgregar);
+        panel.add(btnModificar);
+        panel.add(btnEliminar);
+        panel.add(btnListar);
+
+        menu.add(panel);           // Agrega el panel al frame
+        menu.setVisible(true);     // Muestra la ventana
+    }
+
+    private void Consultas() {
+        // Aquí podrías implementar las consultas
+        
     }
 
     public static void main(String[] args) {
