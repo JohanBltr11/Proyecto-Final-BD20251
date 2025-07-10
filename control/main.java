@@ -11,6 +11,7 @@ public class main {
         
         if (conn != null) {
             System.out.println("✅ La conexión está activa y lista para usar.");
+            vista.main(args);
         } else {
             System.out.println("❌ Error: No se pudo establecer la conexión.");
         }
