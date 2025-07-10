@@ -11,7 +11,7 @@ public class ConexionBD {
     private ConexionBD() {
 	}
 
-	public static ConexionBD getInstancia() {
+	public static ConexionBD getConnection() {
 		if (instancia == null) {
 			instancia = new ConexionBD();
 		}
