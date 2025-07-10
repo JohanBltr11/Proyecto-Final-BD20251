@@ -37,12 +37,11 @@ public class HabitacionDAO {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return new Habitacion(
-                    rs.getInt("IdHabitacion"),
-                    rs.getString("tipoHabitacion"),
-                    rs.getInt("PrecioNoche"),
-                    rs.getBoolean("EstadoMantenimiento"),
-                    rs.getBoolean("EstadoDisponibilidad")
-                );
+                        rs.getInt("IdHabitacion"),
+                        rs.getString("tipoHabitacion"),
+                        rs.getInt("PrecioNoche"),
+                        rs.getBoolean("EstadoMantenimiento"),
+                        rs.getBoolean("EstadoDisponibilidad"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,15 +53,14 @@ public class HabitacionDAO {
         List<Habitacion> lista = new ArrayList<>();
         String sql = "SELECT * FROM Habitacion";
         try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+                ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 lista.add(new Habitacion(
-                    rs.getInt("IdHabitacion"),
-                    rs.getString("tipoHabitacion"),
-                    rs.getInt("PrecioNoche"),
-                    rs.getBoolean("EstadoMantenimiento"),
-                    rs.getBoolean("EstadoDisponibilidad")
-                ));
+                        rs.getInt("IdHabitacion"),
+                        rs.getString("tipoHabitacion"),
+                        rs.getInt("PrecioNoche"),
+                        rs.getBoolean("EstadoMantenimiento"),
+                        rs.getBoolean("EstadoDisponibilidad")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -84,13 +82,14 @@ public class HabitacionDAO {
             return false;
         }
     }
+
     public List<Habitacion> obtenerHabitacionesEnMantenimiento() {
-    List<Habitacion> mantenimiento = new ArrayList<>();
-    String sql = "SELECT * FROM Habitacion WHERE estadoMantenimiento = 1";
+        List<Habitacion> mantenimiento = new ArrayList<>();
+        String sql = "SELECT * FROM Habitacion WHERE estadoMantenimiento = 1";
 
         try (Connection cn = ConexionBD.getConexion().getConnection();
-            Statement stmt = cn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql)) {
+                Statement stmt = cn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 Habitacion h = new Habitacion();
@@ -110,22 +109,22 @@ public class HabitacionDAO {
     }
 
     public List<Habitacion> obtenerHabitacionesLibres() {
-    List<Habitacion> habitacionesLibres = new ArrayList<>();
-    String sql = "SELECT * FROM Habitacion WHERE estadoDisponibilidad = 1 AND estadoMantenimiento = 0";
+        List<Habitacion> habitacionesLibres = new ArrayList<>();
+        String sql = "SELECT * FROM Habitacion WHERE estadoDisponibilidad = 1 AND estadoMantenimiento = 0";
 
-    try (Connection cn = ConexionBD.getConexion().getConnection();
-         PreparedStatement stmt = cn.prepareStatement(sql);
-         ResultSet rs = stmt.executeQuery()) {
+        try (Connection cn = ConexionBD.getConexion().getConnection();
+                PreparedStatement stmt = cn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
 
-        while (rs.next()) {
-            Habitacion h = new Habitacion();
-            h.setIdHabitacion(rs.getInt("idHabitacion"));
-            h.setTipoHabitacion(rs.getString("tipoHabitacion"));
-            h.setPrecioNoche(rs.getInt("precioNoche"));
-            h.setEstadoDisponibilidad(rs.getBoolean("estadoDisponibilidad"));
-            h.setEstadoMantenimiento(rs.getBoolean("estadoMantenimiento"));
-            habitacionesLibres.add(h);
-        }
+            while (rs.next()) {
+                Habitacion h = new Habitacion();
+                h.setIdHabitacion(rs.getInt("idHabitacion"));
+                h.setTipoHabitacion(rs.getString("tipoHabitacion"));
+                h.setPrecioNoche(rs.getInt("precioNoche"));
+                h.setEstadoDisponibilidad(rs.getBoolean("estadoDisponibilidad"));
+                h.setEstadoMantenimiento(rs.getBoolean("estadoMantenimiento"));
+                habitacionesLibres.add(h);
+            }
 
         } catch (SQLException e) {
             System.err.println("❌ Error al obtener habitaciones libres: " + e.getMessage());
@@ -133,12 +132,13 @@ public class HabitacionDAO {
 
         return habitacionesLibres;
     }
+
     public List<Habitacion> obtenerHabitacionesOcupadas() {
-    List<Habitacion> ocupadas = new ArrayList<>();
-    String sql = "SELECT * FROM Habitacion WHERE estadoDisponibilidad = 0 AND estadoMantenimiento = 0";
+        List<Habitacion> ocupadas = new ArrayList<>();
+        String sql = "SELECT * FROM Habitacion WHERE estadoDisponibilidad = 0 AND estadoMantenimiento = 0";
         try (Connection cn = ConexionBD.getConexion().getConnection();
-            Statement stmt = cn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql)) {
+                Statement stmt = cn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 Habitacion h = new Habitacion();
@@ -156,6 +156,7 @@ public class HabitacionDAO {
 
         return ocupadas;
     }
+
     public boolean eliminarHabitacion(int id) {
         String sql = "DELETE FROM Habitacion WHERE IdHabitacion = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -165,5 +166,28 @@ public class HabitacionDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public List<Habitacion> listarTodas() {
+    List<Habitacion> lista = new ArrayList<>();
+    String sql = "SELECT * FROM Habitacion";
+
+    try (PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+
+        while (rs.next()) {
+            Habitacion h = new Habitacion();
+            h.setIdHabitacion(rs.getInt("IdHabitacion"));
+            h.setTipoHabitacion(rs.getString("TipoHabitacion"));
+            h.setPrecioNoche(rs.getInt("PrecioNoche"));
+            h.setEstadoMantenimiento(rs.getBoolean("EstadoMantenimiento"));
+            h.setEstadoDisponibilidad(rs.getBoolean("EstadoDisponibilidad"));
+            lista.add(h);
+        }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
     }
 }

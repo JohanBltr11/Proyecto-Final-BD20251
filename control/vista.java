@@ -1267,23 +1267,23 @@ public class vista extends JFrame {
     }
 
     private void btnEstdHab() {
-        JFrame ventana = new JFrame("Habitaciones Disponibles");
+        JFrame ventana = new JFrame("Estado de Todas las Habitaciones");
         ventana.setSize(700, 300);
         ventana.setLocationRelativeTo(null);
         ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         HabitacionDAO dao = new HabitacionDAO();
-        List<Habitacion> disponibles = dao.obtenerHabitacionesLibres();
+        List<Habitacion> habitaciones = dao.listarTodas(); // 🔁 Aquí el cambio
 
-        if (disponibles.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "⚠️ No hay habitaciones disponibles.");
+        if (habitaciones.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "⚠ No hay habitaciones registradas.");
             return;
         }
 
         String[] columnas = { "ID", "Tipo", "Precio por Noche", "Mantenimiento", "Disponible" };
         DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
 
-        for (Habitacion h : disponibles) {
+        for (Habitacion h : habitaciones) {
             modelo.addRow(new Object[] {
                     h.getIdHabitacion(),
                     h.getTipoHabitacion(),
@@ -1296,7 +1296,7 @@ public class vista extends JFrame {
         JTable tabla = new JTable(modelo);
         JScrollPane scroll = new JScrollPane(tabla);
         ventana.add(scroll, BorderLayout.CENTER);
-        ventana.setVisible(true); // ✅ Mostrar la nueva ventana
+        ventana.setVisible(true);
     }
 
     public static void main(String[] args) {
